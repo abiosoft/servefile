@@ -12,8 +12,6 @@ import (
 testfiles
 ├── dir
 │   ├── dirfile0
-│   └── dirfile1.txt
-├── file0
 └── file1.txt
 */
 
@@ -23,8 +21,6 @@ var requests []string = []string{
 	"dir",
 	"dir/",
 	"dir/dirfile0",
-	"dir/dirfile1.txt",
-	"file0",
 	"file1.txt",
 	"invalid",
 	"dir/invalid",
@@ -37,7 +33,6 @@ var responses = func(path string) []byte {
 	case "/":
 		return []byte(`<pre>
 <a href="dir/">dir/</a>
-<a href="file0">file0</a>
 <a href="file1.txt">file1.txt</a>
 </pre>
 `)
@@ -46,7 +41,6 @@ var responses = func(path string) []byte {
 	case "dir/":
 		return []byte(`<pre>
 <a href="dirfile0">dirfile0</a>
-<a href="dirfile1.txt">dirfile1.txt</a>
 </pre>
 `)
 	case "invalid":

@@ -34,7 +34,7 @@ func main() {
 
 	// Server
 	http.Handle("/", fileHandler(filePath))
-	log.Printf("servefile serving on %v\n", port)
+	log.Printf("servefile serving on port %v\n", port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", port), nil))
 }
 

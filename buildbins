@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+gox -output="binaries/{{.OS}}_{{.Arch}}/{{.Dir}}"

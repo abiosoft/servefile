@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"io/ioutil"
 	"net/http"
@@ -75,7 +76,7 @@ func TestDirHandling(t *testing.T) {
 		expected = bytes.TrimSpace(expected)
 		value := bytes.TrimSpace(recorder.Body.Bytes())
 
-		if !bytes.Equal(expected, value) {
+		if !compareDirBytes(expected, value) {
 			t.Fatalf("Invalid response for %v. Expected: %v, Found: %v", r, string(expected), string(value))
 		}
 	}
@@ -96,8 +97,27 @@ func TestFileHandling(t *testing.T) {
 		handler.ServeHTTP(recorder, req)
 		value := bytes.TrimSpace(recorder.Body.Bytes())
 
-		if !bytes.Equal(expected, value) {
+		if !compareDirBytes(expected, value) {
 			t.Fatalf("Invalid response for %v. Expected: %v, Found: %v", r, string(expected), string(value))
 		}
 	}
+}
+
+// TODO find a better way to compare outputs
+// Created to fix different server outputs on Linux
+func compareDirBytes(a, b []byte) bool {
+	/*
+	   `<pre>
+	   <a href="dirfile0">dirfile0</a>
+	   </pre>
+	   `
+	*/
+	s := bufio.NewScanner(bytes.NewBuffer(a))
+	for s.Scan() {
+		line := s.Text()
+		if !bytes.Contains(b, []byte(line)) {
+			return false
+		}
+	}
+	return len(a) == len(b)
 }

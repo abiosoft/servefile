@@ -1,3 +1,5 @@
+[![Build Status](https://drone.io/github.com/abiosoft/servefile/status.png)](https://drone.io/github.com/abiosoft/servefile/latest)
+
 ## servefile
 Quick way to serve any directory or file
 
